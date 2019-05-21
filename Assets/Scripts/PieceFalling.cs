@@ -4,15 +4,7 @@ using UnityEngine;
 
 public class PieceFalling : MonoBehaviour
 {
-    public float firstDuration;
-    public float duration;
     public float speed;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        InvokeRepeating("CheckSpeed", firstDuration, duration);
-    }
 
     // Update is called once per frame
     void Update()
@@ -22,13 +14,9 @@ public class PieceFalling : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("hello");
-        Destroy(gameObject);
-        Debug.Log("destroy");
-    }
-
-    void CheckSpeed()
-    {
-        Debug.Log("Position: " + transform.position);
+        if (other.gameObject.tag == "Destroyer")
+        {
+            Destroy(gameObject);
+        }
     }
 }

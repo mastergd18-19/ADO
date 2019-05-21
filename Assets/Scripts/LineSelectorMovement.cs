@@ -9,35 +9,30 @@ public class LineSelectorMovement : MonoBehaviour
     private Vector3 line3;
     private Vector3 line4;
     private Vector3 line5;
-    private bool applyMovement;
 
     // Start is called before the first frame update
     void Start()
     {
-        line1 = new Vector3(-4.0f, 0.5f, -28.0f);
-        line2 = new Vector3(-2.0f, 0.5f, -28.0f);
-        line3 = new Vector3(0.0f, 0.5f, -28.0f);
-        line4 = new Vector3(2.0f, 0.5f, -28.0f);
-        line5 = new Vector3(4.0f, 0.5f, -28.0f);
-        applyMovement = true;
+        line1 = new Vector3(-4.0f, 0.25f, -28.0f);
+        line2 = new Vector3(-2.0f, 0.25f, -28.0f);
+        line3 = new Vector3(0.0f, 0.25f, -28.0f);
+        line4 = new Vector3(2.0f, 0.25f, -28.0f);
+        line5 = new Vector3(4.0f, 0.25f, -28.0f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (applyMovement)
-        {
-            Movement();
-        }
+        Movement();
     }
 
     public void Movement()
     {
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             MovementLeft();
         }
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             MovementRight();
         }
