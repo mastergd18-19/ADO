@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LineSelectorBehaviour : MonoBehaviour
+public class LineSelectorDestroyPiece : MonoBehaviour
 {
     private bool pieceCanBeDestroyed;
     private GameObject pieceToDestroy;
@@ -32,23 +32,7 @@ public class LineSelectorBehaviour : MonoBehaviour
             pieceToDestroy = other.gameObject;
         }
     }
-    /*
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.tag == "Piece" && Input.GetKey(KeyCode.Space) && pieceCanBeDestroyed == true)
-        {
-            if (penaltyCountDown == 0.0f)
-            {
-                Destroy(other.gameObject);
-            }
-            else
-            {
-                penaltyCountDown = penalty;
-                //CoUpdatePenaltyCountDown();
-            }
-        }
-    }
-    */
+
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Piece")
@@ -62,6 +46,8 @@ public class LineSelectorBehaviour : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
+            //Debug.Log(pieceCanBeDestroyed + " " + penaltyCountDown);
+
             if (pieceCanBeDestroyed == true && penaltyCountDown == 0.0f)
             {
                 Destroy(pieceToDestroy);
@@ -85,6 +71,24 @@ public class LineSelectorBehaviour : MonoBehaviour
             penaltyCountDown = 0.0f;
         }
     }
+
+    /*
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Piece" && Input.GetKey(KeyCode.Space) && pieceCanBeDestroyed == true)
+        {
+            if (penaltyCountDown == 0.0f)
+            {
+                Destroy(other.gameObject);
+            }
+            else
+            {
+                penaltyCountDown = penalty;
+                //CoUpdatePenaltyCountDown();
+            }
+        }
+    }
+    */
 
     /*
     IEnumerator CoUpdatePenaltyCountDown()
