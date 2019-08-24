@@ -44,18 +44,22 @@ public class LineSelectorDestroyPiece : MonoBehaviour
 
     public void DestroyPiece()
     {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            //Debug.Log(pieceCanBeDestroyed + " " + penaltyCountDown);
+        Debug.Log(pieceCanBeDestroyed + " " + penaltyCountDown);
 
-            if (pieceCanBeDestroyed == true && penaltyCountDown == 0.0f)
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (penaltyCountDown <= 0.0f)
             {
-                Destroy(pieceToDestroy);
-                pieceToDestroy = null;
-            }
-            else if (penaltyCountDown == 0.0f)
-            {
-                penaltyCountDown = penalty;
+                if (pieceCanBeDestroyed == true)
+                {
+                    Destroy(pieceToDestroy);
+                    pieceToDestroy = null;
+                    pieceCanBeDestroyed = false;
+                }
+                else
+                {
+                    penaltyCountDown = penalty;
+                }
             }
         }
     }
@@ -71,33 +75,4 @@ public class LineSelectorDestroyPiece : MonoBehaviour
             penaltyCountDown = 0.0f;
         }
     }
-
-    /*
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.tag == "Piece" && Input.GetKey(KeyCode.Space) && pieceCanBeDestroyed == true)
-        {
-            if (penaltyCountDown == 0.0f)
-            {
-                Destroy(other.gameObject);
-            }
-            else
-            {
-                penaltyCountDown = penalty;
-                //CoUpdatePenaltyCountDown();
-            }
-        }
-    }
-    */
-
-    /*
-    IEnumerator CoUpdatePenaltyCountDown()
-    {
-        while (penaltyCountDown > 0)
-        {
-            yield return new WaitForSeconds(1);
-            penaltyCountDown--;
-        }
-    }
-    */
 }
