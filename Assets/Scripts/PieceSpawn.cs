@@ -113,14 +113,6 @@ public class PieceSpawn : MonoBehaviour
                 GameObject gObj = (GameObject)Instantiate(pieceToSpawn, spawnLanes[spawnLanesPointer], Quaternion.identity);
                 // Pasarle los parámetros necesarios a la pieza spawneada
                 ProvideParametersToSpawnPiece(gObj);
-
-                string s = "[";
-                foreach (float fsl in fallingSpeedLimits)
-                {
-                    s += fsl + " ";
-                }
-                s += "] [" + spawnLanesPointer + " " + fallingSpeed + "]";
-                Debug.Log(s);
             }
             // Volver a calcular los atributos
             CalculateAttibutes(false);

@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum MeshList
+{ 
+    Cube,
+    Sphere
+}
+
 public class LineSelectorMeshController : MonoBehaviour
 {
     public GameObject cubeMesh;
     public GameObject sphereMesh;
-    private List<Mesh> meshList;
+    private List<MeshList> meshList;
     private int meshListPointer;
 
     // Start is called before the first frame update
@@ -14,14 +20,13 @@ public class LineSelectorMeshController : MonoBehaviour
     {
         if (cubeMesh && sphereMesh)
         {
-            meshList = new List<Mesh>()
+            meshList = new List<MeshList>()
             {
-                cubeMesh.GetComponent<MeshFilter>().sharedMesh,
-                sphereMesh.GetComponent<MeshFilter>().sharedMesh
+                MeshList.Cube,
+                MeshList.Sphere
             };
             meshListPointer = 0;
-
-            this.transform.GetChild(0).gameObject.GetComponent<MeshFilter>().mesh = meshList[meshListPointer];
+            LineSelectorChangeMesh();
         }
         else 
         {
@@ -50,8 +55,7 @@ public class LineSelectorMeshController : MonoBehaviour
             {
                 meshListPointer = 0;
             }
-
-            this.transform.GetChild(0).gameObject.GetComponent<MeshFilter>().mesh = meshList[meshListPointer];
+            LineSelectorChangeMesh();
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
@@ -63,8 +67,22 @@ public class LineSelectorMeshController : MonoBehaviour
             {
                 meshListPointer--;
             }
+            LineSelectorChangeMesh();
+        }
+    }
 
-            this.transform.GetChild(0).gameObject.GetComponent<MeshFilter>().mesh = meshList[meshListPointer];
+    public void LineSelectorChangeMesh() 
+    {
+        switch (meshList[meshListPointer])
+        {
+            case MeshList.Cube:
+                this.transform.GetChild(0).gameObject.GetComponent<MeshFilter>().mesh = cubeMesh.GetComponent<MeshFilter>().sharedMesh;
+                break;
+            case MeshList.Sphere:
+                this.transform.GetChild(0).gameObject.GetComponent<MeshFilter>().mesh = sphereMesh.GetComponent<MeshFilter>().sharedMesh;
+                break;
+            default:
+                break;
         }
     }
 }

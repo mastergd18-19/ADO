@@ -1488,8 +1488,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1563,7 +1562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fb339b7807274b498f33f2238145666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pieceToSpawn: {fileID: 5266861823093832575, guid: ed8323da4a31da84aa89919400585a59,
+  pieceToSpawn: {fileID: 4108409484726371072, guid: 811b887f46d0140c882a5cf5db1592a1,
     type: 3}
   minSpawnSeconds: 1
   maxSpawnSeconds: 2
@@ -1598,8 +1597,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
