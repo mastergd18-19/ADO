@@ -4,18 +4,31 @@ using UnityEngine;
 
 public class PieceFalling : MonoBehaviour
 {
-    public float speed;
+    private int id;
+    private int lane;
+    private float fallingSpeed;
+    private PieceSpawn pieceSpawnController;
+
+    public void RecieveParameter(int idRecieved, int laneRecieved, float fallingSpeedRecieved, PieceSpawn pieceSpawnRecieved)
+    {
+        id = idRecieved;
+        lane = laneRecieved;
+        fallingSpeed = fallingSpeedRecieved;
+        pieceSpawnController = pieceSpawnRecieved;
+    }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.back * speed * Time.deltaTime);
+        transform.Translate(Vector3.back * fallingSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Destroyer")
         {
+            // Eliminar id de la lista de ids del pieceSpawnController
+            pieceSpawnController.RemovePieceFromSpawnPieceMap(id, lane);
             Destroy(gameObject);
         }
     }

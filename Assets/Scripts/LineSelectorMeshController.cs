@@ -4,21 +4,38 @@ using UnityEngine;
 
 public class LineSelectorMeshController : MonoBehaviour
 {
-    private enum meshes {cube, sphere};
-    private List<meshes> meshList;
+    public GameObject cubeMesh;
+    public GameObject sphereMesh;
+    private List<Mesh> meshList;
     private int meshListPointer;
 
     // Start is called before the first frame update
     void Start()
     {
-        meshList = new List<meshes>() {meshes.cube, meshes.sphere};
-        meshListPointer = 0;
+        if (cubeMesh && sphereMesh)
+        {
+            meshList = new List<Mesh>()
+            {
+                cubeMesh.GetComponent<MeshFilter>().sharedMesh,
+                sphereMesh.GetComponent<MeshFilter>().sharedMesh
+            };
+            meshListPointer = 0;
+
+            this.transform.GetChild(0).gameObject.GetComponent<MeshFilter>().mesh = meshList[meshListPointer];
+        }
+        else 
+        {
+            Debug.Log("[LineSelectorMeshController] The public meshes attributes are not specified with prefeb meshes");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        ChangeMesh();
+        if (cubeMesh && sphereMesh)
+        {
+            ChangeMesh();
+        }
     }
 
     public void ChangeMesh()
@@ -33,19 +50,8 @@ public class LineSelectorMeshController : MonoBehaviour
             {
                 meshListPointer = 0;
             }
-            Mesh meshToChange = new Mesh();
-            switch (meshList[meshListPointer])
-            {
-                case meshes.cube:
-                    //meshToChange.;
-                    break;
-                case meshes.sphere:
-                    //meshToChange.sphere;
-                    break;
-                default:
-                    break;
-            }
-            //GetComponentInChildren<MeshFilter>().mesh = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
+            this.transform.GetChild(0).gameObject.GetComponent<MeshFilter>().mesh = meshList[meshListPointer];
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
@@ -57,7 +63,8 @@ public class LineSelectorMeshController : MonoBehaviour
             {
                 meshListPointer--;
             }
-            Debug.Log(meshList[meshListPointer]);
+
+            this.transform.GetChild(0).gameObject.GetComponent<MeshFilter>().mesh = meshList[meshListPointer];
         }
     }
 }

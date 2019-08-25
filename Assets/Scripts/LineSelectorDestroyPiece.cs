@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class LineSelectorDestroyPiece : MonoBehaviour
 {
+    public float penalty;
+    private float penaltyCountDown;
     private bool pieceCanBeDestroyed;
     private GameObject pieceToDestroy;
-    public float penaltyCountDown;
-    public float penalty;
 
     // Start is called before the first frame update
     void Start()
     {
+        if (penalty < 0)
+        {
+            penalty = 5.0f;
+        }
+        penaltyCountDown = 0.0f;
         pieceCanBeDestroyed = false;
         pieceToDestroy = null;
-        penaltyCountDown = 0.0f;
     }
 
     // Update is called once per frame
@@ -44,8 +48,6 @@ public class LineSelectorDestroyPiece : MonoBehaviour
 
     public void DestroyPiece()
     {
-        Debug.Log(pieceCanBeDestroyed + " " + penaltyCountDown);
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (penaltyCountDown <= 0.0f)
