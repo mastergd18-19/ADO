@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class LineSelectorDestroyPiece : MonoBehaviour
 {
-    public float penalty;
+    public float penaltyTimer;
     private float penaltyCountDown;
+    private bool penalty;
     private bool pieceCanBeDestroyed;
     private GameObject pieceToDestroy;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (penalty < 0)
+        if (penaltyTimer < 0)
         {
-            penalty = 5.0f;
+            penaltyTimer = 0.0f;
         }
         penaltyCountDown = 0.0f;
+        penalty = false;
         pieceCanBeDestroyed = false;
         pieceToDestroy = null;
     }
@@ -26,6 +28,48 @@ public class LineSelectorDestroyPiece : MonoBehaviour
     {
         DestroyPiece();
         UpdatePenaltyCountDown();
+        Debug.Log("Penalty: " + penalty + " PenaltyCountDown: " + penaltyCountDown);
+    }
+
+    public void DestroyPiece()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (penaltyCountDown <= 0.0f)
+            {
+                if (pieceCanBeDestroyed == true && SameMeshes(pieceToDestroy))
+                {
+                    Destroy(pieceToDestroy);
+                    pieceToDestroy = null;
+                    pieceCanBeDestroyed = false;
+                }
+                else
+                {
+                    penaltyCountDown = penaltyTimer;
+                    penalty = true;
+                }
+            }
+        }
+    }
+
+    public void UpdatePenaltyCountDown()
+    {
+        if (penaltyCountDown > 0.0f)
+        {
+            penaltyCountDown -= Time.deltaTime;
+        }
+        else
+        {
+            penaltyCountDown = 0.0f;
+            penalty = false;
+        }
+    }
+
+    public bool SameMeshes(GameObject gObj)
+    {
+        MeshList LineSelectorMesh = this.gameObject.GetComponent<LineSelectorMeshController>().GetPieceMesh();
+        MeshList PieceMesh = gObj.gameObject.GetComponent<PieceMeshController>().GetPieceMesh();
+        return LineSelectorMesh == PieceMesh;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,38 +87,6 @@ public class LineSelectorDestroyPiece : MonoBehaviour
         {
             pieceCanBeDestroyed = false;
             pieceToDestroy = null;
-        }
-    }
-
-    public void DestroyPiece()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (penaltyCountDown <= 0.0f)
-            {
-                if (pieceCanBeDestroyed == true)
-                {
-                    Destroy(pieceToDestroy);
-                    pieceToDestroy = null;
-                    pieceCanBeDestroyed = false;
-                }
-                else
-                {
-                    penaltyCountDown = penalty;
-                }
-            }
-        }
-    }
-
-    public void UpdatePenaltyCountDown()
-    {
-        if (penaltyCountDown > 0.0f)
-        {
-            penaltyCountDown -= Time.deltaTime;
-        }
-        else
-        {
-            penaltyCountDown = 0.0f;
         }
     }
 }

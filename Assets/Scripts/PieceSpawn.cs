@@ -41,22 +41,22 @@ public class PieceSpawn : MonoBehaviour
     void Start()
     {
         // Protección del tiempo de spawn mínimo y máximo
-        if (minSpawnSeconds < 1.0)
+        if (minSpawnSeconds < 1.0f)
         {
             minSpawnSeconds = 1.0f;
         }
-        if (maxSpawnSeconds < 1.0 && maxSpawnSeconds > 5.0f)
+        if (maxSpawnSeconds < 1.0f)
         {
-            maxSpawnSeconds = 5.0f;
+            maxSpawnSeconds = 1.0f;
         }
         // Protección de la velocidad de movimiento de la pieza mínima y máxima
-        if (minFallingSpeed < 1.0)
+        if (minFallingSpeed < 1.0f)
         {
             minFallingSpeed = 1.0f;
         }
-        if (maxFallingSpeed < 1.0 && maxFallingSpeed > 5.0f)
+        if (maxFallingSpeed < 1.0f)
         {
-            maxFallingSpeed = 5.0f;
+            maxFallingSpeed = 1.0f;
         }
         // Asignación de las posibles carriles a spawnear la pieza
         spawnLanes = new List<Vector3>()
@@ -110,32 +110,13 @@ public class PieceSpawn : MonoBehaviour
             if (pieceToSpawn)
             {
                 // Crear una instancia del prefab pieceToSpawn
-                GameObject gObj = (GameObject)Instantiate(pieceToSpawn, spawnLanes[spawnLanesPointer], Quaternion.identity);
+                GameObject gObj = Instantiate(pieceToSpawn, spawnLanes[spawnLanesPointer], Quaternion.identity) as GameObject;
                 // Pasarle los parámetros necesarios a la pieza spawneada
                 ProvideParametersToSpawnPiece(gObj);
             }
             // Volver a calcular los atributos
             CalculateAttibutes(false);
         }
-    }
-
-    public void CalculateAttibutes(bool firstTime)
-    {
-        // Calcular el tiempo de spawn de una nueva pieza junto con su carril de salida y su velocidad
-        // Asignación de tiempo de spawn y tiempo actual en función de si es la primera vez que se llama o las siguientes
-        spawnSeconds = Random.Range(minSpawnSeconds, maxSpawnSeconds);
-        if (firstTime)
-        {
-            spawnCurrentSeconds = spawnSeconds;
-        }
-        else
-        {
-            spawnCurrentSeconds = 0.0f;
-        }
-        // Asignación de las posibles carriles a spawnear la pieza
-        spawnLanesPointer = Random.Range(0, 5);
-        // Asignación de velocidad de movimiento de la pieza a spawnear
-        fallingSpeed = Random.Range(minFallingSpeed, maxFallingSpeed);
     }
 
     public void ProvideParametersToSpawnPiece(GameObject gObj)
@@ -181,5 +162,24 @@ public class PieceSpawn : MonoBehaviour
             // Modificar la velocidad límite del carril a la máxima posible
             fallingSpeedLimits[pieceLane] = maxFallingSpeed;
         }
+    }
+
+    public void CalculateAttibutes(bool firstTime)
+    {
+        // Calcular el tiempo de spawn de una nueva pieza junto con su carril de salida y su velocidad
+        // Asignación de tiempo de spawn y tiempo actual en función de si es la primera vez que se llama o las siguientes
+        spawnSeconds = Random.Range(minSpawnSeconds, maxSpawnSeconds);
+        if (firstTime)
+        {
+            spawnCurrentSeconds = spawnSeconds;
+        }
+        else
+        {
+            spawnCurrentSeconds = 0.0f;
+        }
+        // Asignación de las posibles carriles a spawnear la pieza
+        spawnLanesPointer = Random.Range(0, 5);
+        // Asignación de velocidad de movimiento de la pieza a spawnear
+        fallingSpeed = Random.Range(minFallingSpeed, maxFallingSpeed);
     }
 }

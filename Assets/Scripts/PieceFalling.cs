@@ -27,9 +27,13 @@ public class PieceFalling : MonoBehaviour
     {
         if (other.gameObject.tag == "Destroyer")
         {
-            // Eliminar id de la lista de ids del pieceSpawnController
-            pieceSpawnController.RemovePieceFromSpawnPieceMap(id, lane);
             Destroy(gameObject);
         }
+    }
+
+    private void OnDestroy()
+    {
+        // Eliminar id de la lista de ids del pieceSpawnController
+        pieceSpawnController.RemovePieceFromSpawnPieceMap(id, lane);
     }
 }

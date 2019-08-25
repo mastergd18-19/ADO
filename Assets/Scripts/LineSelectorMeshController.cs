@@ -4,13 +4,17 @@ using UnityEngine;
 
 public enum MeshList
 { 
+    Capusle,
     Cube,
+    Cylinder,
     Sphere
 }
 
 public class LineSelectorMeshController : MonoBehaviour
 {
+    public GameObject capsuleMesh;
     public GameObject cubeMesh;
+    public GameObject cylinderMesh;
     public GameObject sphereMesh;
     private List<MeshList> meshList;
     private int meshListPointer;
@@ -18,11 +22,13 @@ public class LineSelectorMeshController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (cubeMesh && sphereMesh)
+        if (PrefabAssigned())
         {
             meshList = new List<MeshList>()
             {
+                MeshList.Capusle,
                 MeshList.Cube,
+                MeshList.Cylinder,
                 MeshList.Sphere
             };
             meshListPointer = 0;
@@ -37,7 +43,7 @@ public class LineSelectorMeshController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (cubeMesh && sphereMesh)
+        if (PrefabAssigned())
         {
             ChangeMesh();
         }
@@ -71,18 +77,34 @@ public class LineSelectorMeshController : MonoBehaviour
         }
     }
 
+    public bool PrefabAssigned()
+    {
+        return capsuleMesh && cubeMesh && cylinderMesh && sphereMesh;
+    }
+
     public void LineSelectorChangeMesh() 
     {
         switch (meshList[meshListPointer])
         {
+            case MeshList.Capusle:
+                this.gameObject.GetComponent<MeshFilter>().mesh = capsuleMesh.GetComponent<MeshFilter>().sharedMesh;
+                break;
             case MeshList.Cube:
-                this.transform.GetChild(0).gameObject.GetComponent<MeshFilter>().mesh = cubeMesh.GetComponent<MeshFilter>().sharedMesh;
+                this.gameObject.GetComponent<MeshFilter>().mesh = cubeMesh.GetComponent<MeshFilter>().sharedMesh;
+                break;
+            case MeshList.Cylinder:
+                this.gameObject.GetComponent<MeshFilter>().mesh = cylinderMesh.GetComponent<MeshFilter>().sharedMesh;
                 break;
             case MeshList.Sphere:
-                this.transform.GetChild(0).gameObject.GetComponent<MeshFilter>().mesh = sphereMesh.GetComponent<MeshFilter>().sharedMesh;
+                this.gameObject.GetComponent<MeshFilter>().mesh = sphereMesh.GetComponent<MeshFilter>().sharedMesh;
                 break;
             default:
                 break;
         }
+    }
+
+    public MeshList GetPieceMesh()
+    {
+        return meshList[meshListPointer];
     }
 }
