@@ -1,26 +1,47 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LineSelectorDestroyPiece : MonoBehaviour
 {
+    public Text scoreText;
+    public Text penaltyText;
     public float penaltyTimer;
     private float penaltyCountDown;
-    private bool penalty;
     private bool pieceCanBeDestroyed;
     private GameObject pieceToDestroy;
+    private int increaseScore;
+    private int decreaseScore;
 
     // Start is called before the first frame update
     void Start()
     {
+        if (scoreText)
+        {
+            scoreText.enabled = true;
+        }
+        else
+        {
+            Debug.LogError("[LineSelectorDestroyPiece] The public score text attributes is not specified with prefab objects");
+        }
+        if (penaltyText)
+        {
+            penaltyText.enabled = false;
+        }
+        else
+        {
+            Debug.LogError("[LineSelectorDestroyPiece] The public penalty text attributes is not specified with prefab objects");
+        }
         if (penaltyTimer < 0)
         {
             penaltyTimer = 0.0f;
         }
         penaltyCountDown = 0.0f;
-        penalty = false;
         pieceCanBeDestroyed = false;
         pieceToDestroy = null;
+        increaseScore = 10;
+        decreaseScore = -10;
     }
 
     // Update is called once per frame
@@ -28,7 +49,6 @@ public class LineSelectorDestroyPiece : MonoBehaviour
     {
         DestroyPiece();
         UpdatePenaltyCountDown();
-        Debug.Log("Penalty: " + penalty + " PenaltyCountDown: " + penaltyCountDown);
     }
 
     public void DestroyPiece()
@@ -42,11 +62,37 @@ public class LineSelectorDestroyPiece : MonoBehaviour
                     Destroy(pieceToDestroy);
                     pieceToDestroy = null;
                     pieceCanBeDestroyed = false;
+                    GameManager.Instance.updateScore(increaseScore);
+                    if (scoreText)
+                    {
+                        scoreText.text = "Score: " + GameManager.Instance.getScore();
+                    }
+                    else
+                    {
+                        Debug.LogError("[LineSelectorDestroyPiece] The public score text attributes is not specified with prefab objects");
+                    }
                 }
                 else
                 {
                     penaltyCountDown = penaltyTimer;
-                    penalty = true;
+                    GameManager.Instance.updateScore(decreaseScore);
+                    if (scoreText)
+                    {
+                        scoreText.text = "Score: " + GameManager.Instance.getScore();
+                    }
+                    else
+                    {
+                        Debug.LogError("[LineSelectorDestroyPiece] The public score text attributes is not specified with prefab objects");
+                    }
+                    if (penaltyText)
+                    {
+                        penaltyText.enabled = true;
+                        penaltyText.text = "Penalty: " + (int)penaltyCountDown;
+                    }
+                    else
+                    {
+                        Debug.LogError("[LineSelectorDestroyPiece] The public penalty text attributes is not specified with prefab objects");
+                    }
                 }
             }
         }
@@ -57,11 +103,27 @@ public class LineSelectorDestroyPiece : MonoBehaviour
         if (penaltyCountDown > 0.0f)
         {
             penaltyCountDown -= Time.deltaTime;
+            if (penaltyText)
+            {
+                penaltyText.text = "Penalty: " + (int)penaltyCountDown;
+            }
+            else
+            {
+                Debug.LogError("[LineSelectorDestroyPiece] The public penalty text attributes is not specified with prefab objects");
+            }
         }
         else
         {
             penaltyCountDown = 0.0f;
-            penalty = false;
+            if (penaltyText)
+            {
+                penaltyText.enabled = false;
+                penaltyText.text = "Penalty: " + (int)penaltyCountDown;
+            }
+            else
+            {
+                Debug.LogError("[LineSelectorDestroyPiece] The public penalty text attributes is not specified with prefab objects");
+            }
         }
     }
 

@@ -152,7 +152,7 @@ public class PieceSpawn : MonoBehaviour
         idSpawnPiece++;
         spawnPieceMap.TryGetValue(spawnLanesPointer, out List<int> spawnPieceMapValue);
         spawnPieceMapValue.Add(idSpawnPiece);
-        GameManager.Instance.MainManu(idSpawnPiece);
+        GameManager.Instance.EndGame(idSpawnPiece);
     }
 
     public void RemovePieceFromSpawnPieceMap(int pieceId, int pieceLane)

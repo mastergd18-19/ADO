@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public int maxSpawnPieces;
+    private int score;
 
     private void Awake()
     {
@@ -27,23 +28,24 @@ public class GameManager : MonoBehaviour
         {
             maxSpawnPieces = 1;
         }
+        score = 0;
     }
 
-    public void MainManu(int numberSpawnPieces)
+    public void updateScore(int newScore)
+    {
+        score += newScore;
+    }
+
+    public int getScore()
+    {
+        return score;
+    }
+
+    public void EndGame(int numberSpawnPieces)
     {
         if (numberSpawnPieces > maxSpawnPieces)
         {
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("ScoreMenu");
         }
-    }
-
-    public void PlayGame()
-    {
-        SceneManager.LoadScene("Game");
-    }
-
-    public void QuitGame()
-    {
-        Application.Quit();
     }
 }
