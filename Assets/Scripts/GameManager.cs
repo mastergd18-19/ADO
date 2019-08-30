@@ -5,8 +5,45 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public void LoadScene01(string scene2beLoaded)
+    public static GameManager Instance { get; private set; }
+    public int maxSpawnPieces;
+
+    private void Awake()
     {
-        SceneManager.LoadScene(scene2beLoaded);
+        if (!Instance)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        if (maxSpawnPieces <= 0)
+        {
+            maxSpawnPieces = 1;
+        }
+    }
+
+    public void MainManu(int numberSpawnPieces)
+    {
+        if (numberSpawnPieces > maxSpawnPieces)
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
+    }
+
+    public void PlayGame()
+    {
+        SceneManager.LoadScene("Game");
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

@@ -77,7 +77,7 @@ public class PieceSpawn : MonoBehaviour
             maxFallingSpeed
         };
         // Inicialización del identificador para las piezas spawnedas
-        idSpawnPiece = -1;
+        idSpawnPiece = 0;
         // Inicialización del mapa para las piezas spawneadas
         spawnPieceMap = new Dictionary<int, List<int>>
         {
@@ -152,6 +152,7 @@ public class PieceSpawn : MonoBehaviour
         idSpawnPiece++;
         spawnPieceMap.TryGetValue(spawnLanesPointer, out List<int> spawnPieceMapValue);
         spawnPieceMapValue.Add(idSpawnPiece);
+        GameManager.Instance.MainManu(idSpawnPiece);
     }
 
     public void RemovePieceFromSpawnPieceMap(int pieceId, int pieceLane)
