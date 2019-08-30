@@ -13,11 +13,11 @@ public class LineSelectorMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        line1 = new Vector3(-4.0f, 0.25f, -28.0f);
-        line2 = new Vector3(-2.0f, 0.25f, -28.0f);
-        line3 = new Vector3(0.0f, 0.25f, -28.0f);
-        line4 = new Vector3(2.0f, 0.25f, -28.0f);
-        line5 = new Vector3(4.0f, 0.25f, -28.0f);
+        line1 = new Vector3(-4.0f, 0.5f, -28.0f);
+        line2 = new Vector3(-2.0f, 0.5f, -28.0f);
+        line3 = new Vector3(0.0f, 0.5f, -28.0f);
+        line4 = new Vector3(2.0f, 0.5f, -28.0f);
+        line5 = new Vector3(4.0f, 0.5f, -28.0f);
     }
 
     // Update is called once per frame

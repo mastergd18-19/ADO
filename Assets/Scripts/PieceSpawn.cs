@@ -114,6 +114,10 @@ public class PieceSpawn : MonoBehaviour
                 // Pasarle los parámetros necesarios a la pieza spawneada
                 ProvideParametersToSpawnPiece(gObj);
             }
+            else
+            {
+                Debug.LogError("[PieceSpawn] The public game object attribute is not specified with a prefab objects");
+            }
             // Volver a calcular los atributos
             CalculateAttibutes(false);
         }

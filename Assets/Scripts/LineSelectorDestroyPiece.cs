@@ -37,7 +37,7 @@ public class LineSelectorDestroyPiece : MonoBehaviour
         {
             if (penaltyCountDown <= 0.0f)
             {
-                if (pieceCanBeDestroyed == true && SameMeshes(pieceToDestroy))
+                if (pieceCanBeDestroyed == true && SameMeshes())
                 {
                     Destroy(pieceToDestroy);
                     pieceToDestroy = null;
@@ -65,10 +65,10 @@ public class LineSelectorDestroyPiece : MonoBehaviour
         }
     }
 
-    public bool SameMeshes(GameObject gObj)
+    public bool SameMeshes()
     {
         MeshList LineSelectorMesh = this.gameObject.GetComponent<LineSelectorMeshController>().GetPieceMesh();
-        MeshList PieceMesh = gObj.gameObject.GetComponent<PieceMeshController>().GetPieceMesh();
+        MeshList PieceMesh = pieceToDestroy.gameObject.GetComponent<PieceMeshController>().GetPieceMesh();
         return LineSelectorMesh == PieceMesh;
     }
 

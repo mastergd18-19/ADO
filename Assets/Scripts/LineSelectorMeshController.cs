@@ -4,18 +4,22 @@ using UnityEngine;
 
 public enum MeshList
 { 
-    Capusle,
-    Cube,
-    Cylinder,
-    Sphere
+    Tetris_I,
+    Tetris_J,
+    Tetris_O,
+    Tetris_S,
+    Tetris_T,
+    Tetris_Z
 }
 
 public class LineSelectorMeshController : MonoBehaviour
 {
-    public GameObject capsuleMesh;
-    public GameObject cubeMesh;
-    public GameObject cylinderMesh;
-    public GameObject sphereMesh;
+    public GameObject Tetris_I_Mesh;
+    public GameObject Tetris_J_Mesh;
+    public GameObject Tetris_O_Mesh;
+    public GameObject Tetris_S_Mesh;
+    public GameObject Tetris_T_Mesh;
+    public GameObject Tetris_Z_Mesh;
     private List<MeshList> meshList;
     private int meshListPointer;
 
@@ -26,17 +30,19 @@ public class LineSelectorMeshController : MonoBehaviour
         {
             meshList = new List<MeshList>()
             {
-                MeshList.Capusle,
-                MeshList.Cube,
-                MeshList.Cylinder,
-                MeshList.Sphere
+                MeshList.Tetris_I,
+                MeshList.Tetris_J,
+                MeshList.Tetris_O,
+                MeshList.Tetris_S,
+                MeshList.Tetris_T,
+                MeshList.Tetris_Z
             };
             meshListPointer = 0;
             LineSelectorChangeMesh();
         }
         else 
         {
-            Debug.Log("[LineSelectorMeshController] The public meshes attributes are not specified with prefeb meshes");
+            Debug.LogError("[LineSelectorMeshController] The public meshes attributes are not specified with a prefab objects");
         }
     }
 
@@ -46,6 +52,10 @@ public class LineSelectorMeshController : MonoBehaviour
         if (PrefabAssigned())
         {
             ChangeMesh();
+        }
+        else
+        {
+            Debug.LogError("[LineSelectorMeshController] The public meshes attributes are not specified with a prefab objects");
         }
     }
 
@@ -79,24 +89,30 @@ public class LineSelectorMeshController : MonoBehaviour
 
     public bool PrefabAssigned()
     {
-        return capsuleMesh && cubeMesh && cylinderMesh && sphereMesh;
+        return Tetris_I_Mesh && Tetris_J_Mesh && Tetris_O_Mesh && Tetris_S_Mesh && Tetris_T_Mesh && Tetris_Z_Mesh;
     }
 
     public void LineSelectorChangeMesh() 
     {
         switch (meshList[meshListPointer])
         {
-            case MeshList.Capusle:
-                this.gameObject.GetComponent<MeshFilter>().mesh = capsuleMesh.GetComponent<MeshFilter>().sharedMesh;
+            case MeshList.Tetris_I:
+                this.gameObject.GetComponent<MeshFilter>().mesh = Tetris_I_Mesh.GetComponent<MeshFilter>().sharedMesh;
                 break;
-            case MeshList.Cube:
-                this.gameObject.GetComponent<MeshFilter>().mesh = cubeMesh.GetComponent<MeshFilter>().sharedMesh;
+            case MeshList.Tetris_J:
+                this.gameObject.GetComponent<MeshFilter>().mesh = Tetris_J_Mesh.GetComponent<MeshFilter>().sharedMesh;
                 break;
-            case MeshList.Cylinder:
-                this.gameObject.GetComponent<MeshFilter>().mesh = cylinderMesh.GetComponent<MeshFilter>().sharedMesh;
+            case MeshList.Tetris_O:
+                this.gameObject.GetComponent<MeshFilter>().mesh = Tetris_O_Mesh.GetComponent<MeshFilter>().sharedMesh;
                 break;
-            case MeshList.Sphere:
-                this.gameObject.GetComponent<MeshFilter>().mesh = sphereMesh.GetComponent<MeshFilter>().sharedMesh;
+            case MeshList.Tetris_S:
+                this.gameObject.GetComponent<MeshFilter>().mesh = Tetris_S_Mesh.GetComponent<MeshFilter>().sharedMesh;
+                break;
+            case MeshList.Tetris_T:
+                this.gameObject.GetComponent<MeshFilter>().mesh = Tetris_T_Mesh.GetComponent<MeshFilter>().sharedMesh;
+                break;
+            case MeshList.Tetris_Z:
+                this.gameObject.GetComponent<MeshFilter>().mesh = Tetris_Z_Mesh.GetComponent<MeshFilter>().sharedMesh;
                 break;
             default:
                 break;
